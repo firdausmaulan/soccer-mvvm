@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Soccer</string>
+    <string name="network_error_message">Unable connect to server, please try again later.</string>
+</resources>
