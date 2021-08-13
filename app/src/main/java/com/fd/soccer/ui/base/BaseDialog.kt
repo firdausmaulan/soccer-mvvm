@@ -20,9 +20,12 @@ class BaseDialog {
     }
 
     private fun getErrorMessage(view: View, throwable: Throwable?): String {
-        var errorMessage = view.context.getString(R.string.network_error_message)
+        var errorMessage = ""
         if (throwable != null && throwable is HttpException) {
             errorMessage = throwable.message().toString()
+        }
+        if (errorMessage.isEmpty()) {
+            errorMessage = view.context.getString(R.string.network_error_message)
         }
         return errorMessage
     }
