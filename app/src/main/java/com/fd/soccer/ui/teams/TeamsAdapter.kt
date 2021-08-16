@@ -3,9 +3,9 @@ package com.fd.soccer.ui.teams
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.fd.soccer.data.model.presentation.Team
+import com.fd.soccer.data.model.domain.Team
 import com.fd.soccer.databinding.TeamItemBinding
+import com.fd.soccer.util.loadImage
 
 class TeamsAdapter(private val teams: ArrayList<Team>) :
     RecyclerView.Adapter<TeamsAdapter.ViewHolder>() {
@@ -30,9 +30,7 @@ class TeamsAdapter(private val teams: ArrayList<Team>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
-            Glide.with(ivLogo.context)
-                .load(teams[position].strTeamBadge)
-                .into(ivLogo)
+            ivLogo.loadImage(teams[position].strTeamBadge)
             tvName.text = teams[position].strTeam
             container.setOnClickListener { listener?.onClick(teams[position]) }
         }

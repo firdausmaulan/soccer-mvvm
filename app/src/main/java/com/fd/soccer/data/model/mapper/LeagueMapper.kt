@@ -1,7 +1,7 @@
 package com.fd.soccer.data.model.mapper
 
 import com.fd.soccer.data.model.entity.LeagueEntity
-import com.fd.soccer.data.model.presentation.League
+import com.fd.soccer.data.model.domain.League
 import com.fd.soccer.data.model.response.Country
 import com.fd.soccer.util.Constant
 import com.fd.soccer.util.DateUtil
@@ -31,14 +31,14 @@ class LeagueMapper {
         return countries.map { mapToEntity(it) }
     }
 
-    fun mapToPresentation(entity: LeagueEntity): League {
+    fun mapToDomain(entity: LeagueEntity): League {
         return League(
             idLeague = entity.idLeague,
-            strLeague = entity.strLeague,
+            strLeague = entity.strLeague ?: "",
             strDivision = getDivisionName(entity.strDivision),
-            strCountry = entity.strCountry,
-            strCurrentSeason = entity.strCurrentSeason,
-            strDescription = entity.strDescription,
+            strCountry = entity.strCountry ?: "",
+            strCurrentSeason = entity.strCurrentSeason ?: "",
+            strDescription = entity.strDescription ?: "",
             strFanArt = entity.strFanArt + Constant.PREVIEW_IMG,
             strBanner = entity.strBanner + Constant.PREVIEW_IMG,
             strBadge = entity.strBadge + Constant.PREVIEW_IMG,
@@ -48,9 +48,9 @@ class LeagueMapper {
         )
     }
 
-    fun mapToPresentation(entities: List<LeagueEntity>?): List<League> {
+    fun mapToDomain(entities: List<LeagueEntity>?): List<League> {
         if (entities.isNullOrEmpty()) return emptyList()
-        return entities.map { mapToPresentation(it) }
+        return entities.map { mapToDomain(it) }
     }
 
     private fun getDivisionName(division: String?): String {

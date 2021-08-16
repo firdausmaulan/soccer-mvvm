@@ -3,9 +3,9 @@ package com.fd.soccer.ui.leagues
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.fd.soccer.data.model.presentation.League
+import com.fd.soccer.data.model.domain.League
 import com.fd.soccer.databinding.LeagueItemBinding
+import com.fd.soccer.util.loadImage
 
 class LeagueAdapter(private val leagues: ArrayList<League>) :
     RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
@@ -30,9 +30,7 @@ class LeagueAdapter(private val leagues: ArrayList<League>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
-            Glide.with(ivLogo.context)
-                .load(leagues[position].strBadge)
-                .into(ivLogo)
+            ivLogo.loadImage(leagues[position].strBadge)
             tvName.text = leagues[position].strLeague
             container.setOnClickListener { listener?.onClick(leagues[position]) }
         }

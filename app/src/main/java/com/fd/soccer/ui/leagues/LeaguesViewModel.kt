@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fd.soccer.data.model.mapper.LeagueMapper
-import com.fd.soccer.data.model.presentation.League
+import com.fd.soccer.data.model.domain.League
 import com.fd.soccer.data.model.request.LeaguesRequest
 import com.fd.soccer.data.repository.league.LeagueRepository
 import com.fd.soccer.util.Constant
@@ -21,18 +21,13 @@ class LeaguesViewModel(
 
     val leaguesLiveData = MutableLiveData<State<List<League>>>()
 
-    init {
-        val request = LeaguesRequest(sport = Constant.SPORT, country = Constant.COUNTRY)
-        fetchTeams(request)
-    }
-
-    fun fetchTeams(request: LeaguesRequest) {
+    fun fetchLeagues(request: LeaguesRequest) {
         viewModelScope.launch {
             leaguesLiveData.postValue(State.loading())
             val result = withContext(Dispatchers.IO) { leagueRepository.getLeagues(request) }
             if (result.status == Status.SUCCESS) {
-                val leaguesPresentation = leagueMapper.mapToPresentation(result.data)
-                leaguesLiveData.postValue(State.success(leaguesPresentation))
+                val leagues = leagueMapper.mapToDomain(result.data)
+                leaguesLiveData.postValue(State.success(leagues))
             } else {
                 leaguesLiveData.postValue(State.error(result.throwable))
             }

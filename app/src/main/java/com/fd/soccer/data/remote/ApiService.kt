@@ -1,5 +1,6 @@
 package com.fd.soccer.data.remote
 
+import com.fd.soccer.data.model.response.EventsResponse
 import com.fd.soccer.data.model.response.LeaguesResponse
 import com.fd.soccer.data.model.response.TeamsResponse
 import retrofit2.http.GET
@@ -17,4 +18,9 @@ interface ApiService {
     suspend fun getTeams(
         @Query("id") id: String
     ): TeamsResponse?
+
+    @GET("eventslast.php")
+    suspend fun getLastEvents(
+        @Query("id") id: String
+    ): EventsResponse?
 }

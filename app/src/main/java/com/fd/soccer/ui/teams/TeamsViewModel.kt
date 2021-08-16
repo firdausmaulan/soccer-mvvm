@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fd.soccer.data.model.mapper.TeamMapper
-import com.fd.soccer.data.model.presentation.Team
+import com.fd.soccer.data.model.domain.Team
 import com.fd.soccer.data.model.request.TeamsRequest
 import com.fd.soccer.data.repository.team.TeamRepository
 import com.fd.soccer.util.State
@@ -25,8 +25,8 @@ class TeamsViewModel(
             teamsLiveData.postValue(State.loading())
             val result = withContext(Dispatchers.IO) { teamRepository.getTeams(request) }
             if (result.status == Status.SUCCESS) {
-                val teamsPresentation = teamMapper.mapToPresentation(result.data)
-                teamsLiveData.postValue(State.success(teamsPresentation))
+                val teams = teamMapper.mapToDomain(result.data)
+                teamsLiveData.postValue(State.success(teams))
             } else {
                 teamsLiveData.postValue(State.error(result.throwable))
             }

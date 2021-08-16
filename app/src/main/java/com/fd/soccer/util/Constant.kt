@@ -6,7 +6,7 @@ object Constant {
 
     const val SPORT = "Soccer"
 
-    const val COUNTRY = "Italy"
+    const val COUNTRY = "England"
 
     const val PREVIEW_IMG = "/preview"
 }

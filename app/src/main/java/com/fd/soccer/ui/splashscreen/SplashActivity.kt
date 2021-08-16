@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
             val intent = LeaguesActivity.startIntent(this)
             startActivity(intent)
             finish()
-        }, 3000)
+        }, 1000)
 
     }
 }

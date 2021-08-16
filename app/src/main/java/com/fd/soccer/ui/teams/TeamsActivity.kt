@@ -5,17 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fd.soccer.R
+import com.fd.soccer.data.model.domain.League
 
 class TeamsActivity : AppCompatActivity() {
 
-    private lateinit var leagueId: String
+    private lateinit var league: League
 
     companion object {
-        const val LEAGUE_ID = "leagueId"
+        const val LEAGUE = "league"
 
-        fun startIntent(activity: Activity, leagueId: String?): Intent {
+        fun startIntent(activity: Activity, league: League?): Intent {
             val intent = Intent(activity, TeamsActivity::class.java)
-            intent.putExtra(LEAGUE_ID, leagueId)
+            intent.putExtra(LEAGUE, league)
             return intent
         }
     }
@@ -24,12 +25,20 @@ class TeamsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.teams_activity)
 
-        leagueId = intent.getStringExtra(LEAGUE_ID) ?: ""
+        league = intent.getParcelableExtra<League>(LEAGUE) ?: League()
+
+        supportActionBar?.title = league.strLeague
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, TeamsFragment.newInstance(leagueId))
+                .replace(R.id.container, TeamsFragment.newInstance(league.idLeague))
                 .commitNow()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

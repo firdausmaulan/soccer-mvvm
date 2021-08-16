@@ -7,7 +7,6 @@ import com.fd.soccer.data.model.request.LeaguesRequest
 import com.fd.soccer.data.remote.ApiService
 import com.fd.soccer.util.DateUtil
 import com.fd.soccer.util.RepositoryResult
-import java.lang.Exception
 
 class LeagueRepositoryImp(
     private val apiService: ApiService,
@@ -35,14 +34,12 @@ class LeagueRepositoryImp(
                 result = database.leagueDao().getAll(request.country, currentDate)
                 RepositoryResult.success(result)
             }
-        } catch (ex : Exception) {
-            ex.printStackTrace()
-            return RepositoryResult.success(emptyList())
-            /*return if (result.isNotEmpty()) {
+        } catch (throwable: Throwable) {
+            return if (result.isNotEmpty()) {
                 RepositoryResult.success(result)
             } else {
                 RepositoryResult.error(throwable)
-            }*/
+            }
         }
     }
 
